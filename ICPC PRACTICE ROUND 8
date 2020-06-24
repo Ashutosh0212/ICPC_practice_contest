@@ -17,3 +17,268 @@ Explanation:-
         print(max(size))
     else:
         print(len(s) + 1)
+=====================================================================================================
+Q2 ... https://codeforces.com/gym/285257/problem/B
+Explanation:-
+  here i have taken the set of all the numbers because 
+  we can basically get maxium of 3 numbers in the set a-D,a,a+D
+  here there is one more catch that when length of set is 2 then the D can become d//2
+Code:
+  n = input()
+  a = list(map(int, input().rstrip().split()))
+  a=list(set(a))
+  a.sort()
+  if len(a)>3:
+      print(-1)
+  elif len(a)==3:
+      a1=a[2]-a[1]
+      a2=a[1]-a[0]
+      if a1==a2:
+          print(a1)
+      else:
+          print(-1)
+  elif len(a)==2:
+      a1=a[1]-a[0]
+      if a1%2==0:
+          print(a1//2)
+      else:
+          print(a1)
+  elif len(a)==1:
+      print(0)
+ ===========================================================================================================
+Q3 ... https://codeforces.com/gym/285257/problem/C
+
+Explanation:
+  Note that it makes no sense to choose the city for bakeries and the city with the warehouse so that 
+  had more than one way between them, as every road increases the distance over which you have to pay.
+  
+  So, the problem reduces to the following:
+  1st select two neighboring cities so that one is a warehouse, and in the other & mdash;
+  no. For doing this, simply iterate through all the city with the warehouse, among the 
+  neighbors of each town without looking for a warehouse and update the answer.
+  If there is such a pair of cities, print -1.
+
+Code:
+  ===========================================================================================================
+ Q4 ... https://codeforces.com/gym/285257/problem/D
+ 
+ explanation:
+   its just a simple tree where we have to find the link having maximum cost, we achive this by dynamic prograaming
+ code:
+  n = int(input())
+  a = list(map(int, input().split()))
+  b = list(map(int, input().split()))
+  x = y = 0
+  for i in range(n):
+      x, y = max(x, y + a[i]), max(y, x + b[i])
+  print(max(x, y))
+=================================================================================================================
+Q5 ...https://codeforces.com/gym/285257/problem/E
+
+Explantion:
+  If s has any 'm' or 'w', the answer is 0. Otherwise, we can do dp.
+
+Define dpi to be the number of strings that Constanze's machine would've turned into the first i characters of s.
+Then, dp0=dp1=1. For i>1, transition is dpi=dpi−1+dpi−2 if both si=si−1 and si is either 'u' or 'n', and simply dpi=dpi−1 otherwise.
+Answer is dp|s|.
+
+Alternatively, notice that the maximum cardinality segment consisiting of k letters 'u' or 'n' 
+multiplies the answer by the k-th term of Fibonacci sequence. Thus, you can precalculate it and some sort of two iterators.
+
+code:
+s=input()
+dp=[1,1]
+cant=False
+if "w" in s or "m" in s:
+    cant=True
+for i in range(1,len(s)):
+    if s[i]+s[i-1]=="uu" or s[i]+s[i-1]=="nn":
+        dp.append((dp[-1]+dp[-2])%(10**9+7))
+    else:
+        dp.append(dp[-1])
+    #print(s[i],dp[-1])
+if cant:
+    print(0)
+else:
+    print(dp[-1])
+=====================================================================================================================================
+Q6 ...https://codeforces.com/gym/285257/problem/F
+
+explanation :
+its pretty easy pls read the Q again
+code:
+n=int(input())
+if(n%2!=0):
+    if(n==1):
+        print(-1)
+    else:
+        b=((n*n)-1)//2
+        c=((n*n)+1)//2
+        print(b,c)
+else:
+    if(n==2):
+        print(-1)
+    else:
+        b = ((n * n) // 4 )- 1
+        c = ((n * n) // 4 )+ 1
+        print(b,c)
+====================================================================================================================================================
+Q7 ... https://codeforces.com/gym/285257/problem/G
+
+Explanation :
+  here i have set peticular condition about when we have to use the battery and when we have to use the accumulator
+  explained in the code 
+code:
+n, b, a = map(int, input().rstrip().split())
+k = list(map(int, input().rstrip().split()))
+b1 = b
+a1 = a
+i=0
+while i<n:
+    if a1 == 0 and b1 == 0:
+        break
+    if k[i] == 1:
+        if 0 <= a1 < a and b1 > 0:
+            b1 -= 1
+            a1 += 1
+        elif a1 == a:
+            a1 -= 1
+        elif b1 == 0 and a1 > 0:
+            a1 -= 1
+    elif k[i] == 0:
+        if a1 > 0:
+            a1 -= 1
+        elif a1 == 0:
+            b1 -= 1
+    i+=1
+print(i)
+====================================================================================================================================
+Q8 ...https://codeforces.com/gym/285257/problem/H
+explanation:
+  https://codeforces.com/blog/entry/68079
+  here its explained in ery n=much detail
+code:
+#include <bits/stdc++.h>
+
+using namespace std;
+
+
+int main() {
+
+    int n;
+    cin>>n;
+    vector<int> a(n+1);
+    int u, v;
+    for (int i = 0; i<n-1; i++)
+    {
+        cin>>u>>v;
+        a[u]++;
+        a[v]++;
+    }
+    bool check = false;
+    for (int i = 1; i<=n; i++) if (a[i]==2) check = true;
+    if (check) cout<<"NO";
+    else cout<<"YES";
+}
+ 
+===========================================================================================================================================
+Q9 ...https://codeforces.com/gym/285257/problem/I
+explanation:
+Let dp[x] be the answer for our problem if the last element of our subsequence equals to x.
+
+Then we have an easy solution: let's store dp as a "std::map" (C++) or "HashMap" (Java). 
+Initially for each i∈[1..n] dp[ai]=0. Then let's iterate over all ai in order of input and try to update dp[ai] with a dp[ai−1]+1 (dp[ai]=max(dp[ai],dp[ai−1]+1)).
+
+Then the maximum element of dp will be our answer.
+Let it be ans. Then let's find any ai such that dp[ai]=ans. Let it be lst.
+Then for restoring the answer we need to iterate over all elements of our array in reverse order
+and if the current element ak=lst then push k to the array of positions of our subsequence and make lst:=lst−1.
+
+
+code:
+from sys import stdin
+import sys
+ 
+if __name__=="__main__":
+    n=int(stdin.readline())
+    arr=list(map(int,stdin.readline().split()))
+    ans=0
+    dp={}
+    
+    for i in range (n):
+        if arr[i]-1 not in dp:
+            dp[arr[i]]=1
+        else:
+            dp[arr[i]]=dp[arr[i]-1]+1
+            
+        if dp[arr[i]]>ans:
+            ans=dp[arr[i]]
+            idx=arr[i]
+    st=[] 
+    # print("idx",idx)
+    for i in range (n-1,-1,-1):
+        if arr[i]==idx:
+            idx-=1
+            st.append(i+1)
+    st.reverse()
+    print(ans)
+    print(*st)
+            
+
+===========================================================================================================================================
+Q10 ...https://codeforces.com/gym/285257/problem/J
+explanationm:
+
+Denote string t as hard.
+
+We will solve this problem with dynamic programming.
+Denote dpcnt,len — the minimum possible ambiguity if we considered first cnt letters of statement and got prefix t having length len as a subsequence of the string.
+If cnt-th letter of the statement is not equal to tlen, then dpcnt,len=dpcnt−1,len — we don't have to change it.
+Otherwise we either change the letter, or let it stay as it is (and the length of the prefix we found so far increases):  dpcnt,len=min(dpcnt−1,len−1,dpcnt−1,len+acnt−1
+
+
+code:
+
+a=int(input())
+b=input()
+c=list(map(int,input().split()))
+d={'h':1,'a':2,'r':3,'d':4}
+e=[10**20,0,0,0,0]
+for f,g in zip(c,b):
+    if g in d:
+        e[d[g]]=min(e[d[g] - 1],e[d[g]]+f)
+print(e[4])
+
+===========================================================================================================================================
+Q11 ...https://codeforces.com/gym/285257/problem/K
+explanation:
+its just x-2 and y-2
+
+code:
+x=[]
+i=0
+for _ in range(5):
+    a = list(map(int, input().rstrip().split()))
+    x.append(a)
+    if sum(a)==1:
+        i=_
+        j=a.index(1)
+print(abs(2-i)+abs(2-j))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
