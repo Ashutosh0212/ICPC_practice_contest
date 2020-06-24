@@ -59,6 +59,14 @@ Explanation:
   If there is such a pair of cities, print -1.
 
 Code:
+
+f=lambda: map(int, input().split(' '))
+n, m, k =f()
+l=[list(f()) for i in range(m)]
+u = set(f()) if k else []
+x = [c for a, b, c, in l if(a in u)^(b in u)]
+print(min(x) if x else -1)
+
   ===========================================================================================================
  Q4 ... https://codeforces.com/gym/285257/problem/D
  
